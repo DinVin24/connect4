@@ -1,0 +1,79 @@
+row1 = ["-", "-", "-", "-", "-", "-", "-"]
+row2 = ["-", "-", "-", "-", "-", "-", "-"]
+row3 = ["-", "-", "-", "-", "-", "-", "-"]
+row4 = ["-", "-", "-", "-", "-", "-", "-"]
+row5 = ["-", "-", "-", "-", "-", "-", "-"]
+row6 = ["-", "-", "-", "-", "-", "-", "-"]
+grid = [row1, row2, row3, row4, row5, row6]
+height = 6
+width = 7
+print(row1, '\n', row2, '\n', row3, '\n', row4, '\n', row5, '\n', row6)
+
+def columnchecking(x, tile):
+    for n, i in enumerate (row6):
+        if x == n+1:
+            if row1[n] != "-":
+                print("collumn full")
+                return False
+            elif row2[n] != "-":
+                row1[n] = tile
+            elif row3[n] != "-":
+                row2[n] = tile
+            elif row4[n] != "-":
+                row3[n] = tile
+            elif row5[n] != "-":
+                row4[n] = tile
+            elif row6[n] != "-":
+                row5[n] = tile
+            else:
+                row6[n] = tile
+    return True
+
+def wincheck(tile):
+    #horizontal
+    for y in range(height):
+        for x in range(width-3):
+            if grid[y][x] == tile and grid[y][x+1] == tile and grid[y][x+2] == tile and grid[y][x+3] == tile:
+                return True
+    #verical
+    for x in range(width):
+        for y in range(height-3):
+            if grid[y][x] == tile and grid[y+1][x] == tile and grid[y+2][x] == tile and grid[y+3][x] == tile:
+                return True
+
+    #diagonal \ i think
+    for y in range(height-3):
+        for x in range(width-3):
+            if grid[y][x] == tile and grid[y+1][x+1] == tile and grid[y+2][x+2] == tile and grid[y+3][x+3] == tile:
+                return True
+
+    #diagonal / i think
+    for y in range(height-3):
+        for x in range(3, width):
+            if grid[y][x] == tile and grid[y+1][x-1] == tile and grid[y+2][x-2] == tile and grid[y+3][x-3] == tile:
+                return True
+
+    return False
+
+while True:
+    playerone = True
+    playertwo = True
+    while playerone:
+        p1 = int(input("P1, choose a column: \n"))
+        if columnchecking(p1, "x"):
+            playerone = False
+            print(row1, '\n', row2, '\n', row3, '\n', row4, '\n', row5, '\n', row6)
+
+    if wincheck("x"):
+        print("Player ONE won!")
+        break
+
+    while playertwo:
+        p2 = int(input("P2, choose a column: \n"))
+        if columnchecking(p2, "o"):
+            playertwo = False
+        print(row1, '\n', row2, '\n', row3, '\n', row4, '\n', row5, '\n', row6)
+
+    if wincheck("o"):
+        print("Player TWO won!")
+        break
